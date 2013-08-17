@@ -1,0 +1,86 @@
+body {
+	margin: 0;
+	text-align: center;
+	font-family: 'Chela One', cursive;
+}
+
+.content {
+	background: url('../img/background.png') repeat-x;
+	position: absolute;
+	width:100%;
+    height:100%;
+	font-size: 50px;
+}
+
+#clients, #visits {
+	left: -100%;
+}
+
+#nav {
+	position: fixed;
+	bottom : 0;
+	width : 100%;
+	height : 100px;
+	background-color: #393535;
+	border-top: 2px solid black;
+}
+
+#nav-container {
+	width: 300px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/*
+ These are the divs that are used for navigation
+ u, v and c stand for users, visits and clients respectively
+*/
+#u-nav {
+	width: 84px;
+	height : 78px;
+	margin-top: 5px;
+	background-image: url('../img/users.png');
+	float: left;
+}
+
+#u-nav:hover {
+	background-image: url('../img/users_hover.png');
+}
+
+#c-nav {
+	width: 84px;
+	height : 78px;
+	margin-top: 5px;
+	background-image: url('../img/clients.png');
+	float: right;
+}
+
+#c-nav:hover {
+	background-image: url('../img/clients_hover.png');
+}
+
+#v-nav {
+	width: 84px;
+	height : 78px;
+	margin-top: 5px;
+	background-image: url('../img/views.png');
+	display: inline-block;
+}
+
+#v-nav:hover {
+	background-image: url('../img/views_hover.png');
+}
+
+#tooltip {
+	display: none;
+	position: absolute;
+	width: 75px;
+	height: 28px;
+	background-color: #393535;
+	border-radius: 5px 5px 0 0;
+	text-align: center;
+	border-top: 2px solid black;
+	font-weight:  : 20;
+	color : #b9c5e1;
+}
