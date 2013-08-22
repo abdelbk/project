@@ -16,7 +16,7 @@ $C['DB_USER'] = 'user';
 $C['DB_PASS'] = 'password';
 
 // The  databse name, you have to keep this name
-$C['DB_NAME'] = 'application';
+$C['DB_NAME'] = 'databasename';
 
 // The debug mode
 $C['DEBUG_MODE'] = 'true';
