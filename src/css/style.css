@@ -1,4 +1,7 @@
 body {
+	background: url('../img/background.png') repeat-x;
+	background-size: 100% auto;
+	background-attachment: fixed;
 	margin: 0;
 	text-align: center;
 	font-family: 'Chela One', cursive;
@@ -83,4 +86,75 @@ body {
 	border-top: 2px solid black;
 	font-weight:  : 20;
 	color : #b9c5e1;
+}
+
+#logout {
+	position: fixed;
+	height: 40px;
+	background-color: #393535;
+	border: 2px solid black;
+	border-top: none;
+	border-radius: 0 0 5px 5px;
+	top: -12px;
+	right: 1em;
+	z-index: 100;
+}
+
+#logout:hover {
+	top: 0;
+	-webkit-transition: all 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
+	-moz-transition:    all 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    -o-transition:      all 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  	transition:         all 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+input[type=submit] {
+	margin: 4px 0;
+	padding: 8px 14px 8px 14px;
+	border: none;
+	background-color: #393535;
+	font-family: 'Chela One', cursive;
+	font-size: 15px;
+	color : #b9c5e1;
+}
+
+input[type=submit]:hover {
+	color: white;
+}
+
+.table {
+	text-align: center;
+	margin : 0px auto;
+}
+
+table {
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right : auto;
+	padding: 10px;
+	border-collapse:collapse;
+	font-size:30px;
+	border-top:2px solid #015287;
+	width:480px;
+}
+
+th {
+	border-bottom: 2px solid #015287;
+	color: #D15600;
+	font-size: 22px;
+	font-weight: normal;
+	text-align: left;
+	padding: 3px 8px;
+}
+
+td {
+	padding: 6px;
+	text-align: center;
+}
+
+tbody> tr:hover{
+	background-color : #9f9d9d;
+	transition-property: background-color;
+	transition-duration: 0.8s;
+
 }

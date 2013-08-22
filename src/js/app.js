@@ -1,8 +1,9 @@
 /*
-@author Abdelkader Benkhadra
+ * @author Abdelkader Benkhadra
 */
 
 jQuery(function($) {
+var y = $('#clients').offset().left; // get the left offset of one of the hidden divs
 
 // Slide between the content divs
 $('#nav-container').children().click(function() {
@@ -20,8 +21,7 @@ $('#nav-container').children().click(function() {
 
 // Show the div if it's off screen
 function showOnScreen(id) {
-    var content = $(id), // The desired div to be shown
-        y = content.offset().left - 150; // ensure that the hidden div is completely off screen
+    var content = $(id);// The desired div to be shown
     // If the div is hidden then show it and hide the active one
     if(content.offset().left < 0) {
         content.animate({ "left": 0}, "slow", function() {
@@ -57,7 +57,7 @@ function tooltip(id, t) {
 
 
 tooltip('#u-nav', 'utilisateurs');
-tooltip('#c-nav', 'clients');
-tooltip('#v-nav', 'visites');
- 
+tooltip('#c-nav', 'business');
+tooltip('#v-nav', 'sites');
+
 });

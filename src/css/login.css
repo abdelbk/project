@@ -1,0 +1,101 @@
+body {
+	background:url(../img/background.png) no-repeat;
+	background-size: 100% auto;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	padding: 0;
+	font-size: 12px;
+	margin: 0 auto;
+	color: #000;
+}
+
+#main_container {
+	margin:0 auto;
+	width:700px;
+	padding:0px 0 0px 0;
+}
+
+.content {
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+	width: 500px;
+	height: auto;
+	background-color: white;
+	border-radius: 10px;
+	top: 150px;
+	-moz-box-shadow: 0 0 8px #888;
+	-webkit-box-shadow: 0 0 8px #888;
+	box-shadow: 0 0 8px #888;
+}
+
+fieldset {
+	text-align: center;
+	border: none;
+	clear: both;
+}
+
+dl {
+	text-align: center;
+	clear:both;
+	padding: 20px 0 0 0;
+}
+
+dl.submit {
+	clear:both;
+	height: 50px; 
+}
+
+input[type=text], input[type="password"] {
+	border: 3px solid #393535;
+	height: 28px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: inset 1px 2px 4px rgba(0,0,0,0.32);
+	-webkit-box-shadow: inset 1px 2px rgba(0,0,0,0.32);
+	box-shadow: inset 1px 2px 4px rgba(0,0,0,0.32);
+	font-family: "Myriad Pro";
+	font-size: 13px;
+	font-weight: bold;
+	color: #9c9595;
+	padding: 0 0 0 20px;
+}
+
+input[type=submit] {
+	margin: 4px 0;
+	padding: 8px 14px 8px 14px;
+	border: 1px solid black;
+	background-color: #393535;
+	font-family: 'Chela One', cursive;
+	font-size: 15px;
+	color : #b9c5e1;
+}
+
+input[type=submit]:hover {
+	background-color: #b9c5e1;
+	color: #393535;
+	-webkit-transition: background-color 500ms linear;
+     -moz-transition: background-color 500ms linear;
+     -o-transition: background-color 500ms linear;
+     -ms-transition: background-color 500ms linear;
+     transition: background-color 500ms linear;
+}
+
+.error {
+	width : 350px;
+	height : auto;
+	background-color: #ee5b5b;
+	margin: auto;
+	text-align: center;
+	font-family: 'Chela One', cursive;
+	font-size: 15px;
+	-moz-border-radius: 0 0 5px 5px; 
+	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	-moz-box-shadow: inset 0 0 4px rgba(0,0,0,0.32);
+	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.32);
+	box-shadow: inset 0 0 4px rgba(0,0,0,0.32);
+}
+
