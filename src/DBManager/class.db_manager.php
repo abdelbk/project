@@ -54,6 +54,7 @@ Class DB_Manager extends DB_Connect {
 			$content = $this->readFile($this->_folder . $file);
 			$date = $this->getJsonDate($file);
 			
+			// Insert data if the file is being processed for the first time
 			if($this->checkDate($date))
 			{
 				foreach($content['users'] as $users)
@@ -122,8 +123,89 @@ Class DB_Manager extends DB_Connect {
 					die($e->getMessage());
 				}
 			}
+			// Update database if the file's data changed
+			else
+			{
+				// Update the users table
+				$this->checkForUpdates('users', 'Users', $content, $date);
+				// Update the sites table
+				$this->checkForUpdates('sites', 'Sites', $content, $date);
+				// Update the business table
+				$this->checkForUpdates('business', 'Business', $content, $date);
+			}
 		}
 		echo '<strong>database updated !!</strong';
+	}
+
+	/**
+	 * Create the json files from their urls
+	 *
+	 * @param int $year, the the year from which we want to start checking for urls
+	 * @param int $month , the month from which we want to start checking for urls
+	*/
+	public function setJsonFiles($year, $month)
+	{
+		for($y = $year;; $y++)
+		{
+			for($m = $month; $m < 13; $m++)
+			{
+				$m = str_pad($m, 2, '0', STR_PAD_LEFT);
+				$url = 'http://data-json.simplebo.fr/'.$y.$m.'/json';
+				if($this->urlExists($url))
+				{
+					$file = $y.$m.'.json';
+					$this->writeContent($url, $file);
+					if(filesize($file) > 0)
+					{
+						$this->_messages[] = $file . " has been created<br />";
+					}
+				}
+				else
+				{
+					break 2;
+				}
+
+				if($m == 12)
+				{
+					$month = 1;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check for updates for a given table
+	 *
+	 * @param String $table, the tablename that we want to check updates for
+	 * @param String $obj, the classname from wich we want to get the existent data
+	 * @param array $content, the content of the file with which we want to compare the old data to
+	 * @param array $date, the date of the file  
+	 */
+
+	private function checkForUpdates($table, $obj, $content, $date)
+	{
+		$new_data = array();
+		$object = new $obj($dbo);
+		$old_data = $object->loadDataByDate($date);
+		$new_data = $content[$table];
+		$updates = array_diff_assoc($new_data, $old_data);
+		if(!empty($updates))
+		{
+			foreach($updates as $key => $value)
+			{
+				$sql = "UPDATE $table SET $key = '$value' WHERE year = $date[0] AND month = $date[1]";
+				try
+				{
+					$stmt = $this->db->prepare($sql);
+					$stmt->execute();
+					$stmt->closeCursor();
+				}
+				catch(Exception $e)
+				{
+					die($e->getMessage());
+				}
+			}
+		}
 	}
 
 	// Get all the json files
@@ -223,5 +305,44 @@ Class DB_Manager extends DB_Connect {
 
 	}
 
-}
+	/**
+	 * Check if the url exists
+	 *
+	 * @param String $url, the url
+	*/
+	private function urlExists($url) 
+	{
+    	$ch = @curl_init($url);
+    	@curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    	@curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+    	@curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+    	@curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    	$status = array();
+    	preg_match('/HTTP\/.* ([0-9]+) .*/', @curl_exec($ch) , $status);
+    	if($status[1] == '200')
+    	{
+    		return true;
+    	}
+    	return false;
+	}
 
+	/**
+	 * Write the content of the url to a file
+	 *
+	 * @param String $url, the url from which we want to get the content
+	 * @param String $file, the filename that will hold the content
+	*/
+	private function writeContent($url, $file)
+	{
+		$ch = @curl_init($url);
+    	$fp = fopen($this->_folder . $file, "w");
+    	@curl_setopt ($ch, CURLOPT_URL, $url);
+    	@curl_setopt($ch, CURLOPT_FILE, $fp);
+    	@curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);
+    	$content = @curl_exec($ch);
+    	fwrite($fp, $content);
+    	@curl_close($ch);
+		fclose($fp);
+	}
+
+}

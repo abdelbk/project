@@ -41,6 +41,34 @@ Class Users extends DB_Connect {
 			echo"</table>";
 	}
 
+	/**
+	 * Load data for a specific data
+	 *
+	 * @param array $date, the given date
+	*/ 
+	public function loadDataByDate($date)
+	{
+		$sql = "SELECT nb_trial_user, nb_paid_user FROM users
+				WHERE year = :year AND month = :month
+				LIMIT 1";
+
+		try
+		{
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(':year', $date[0], PDO::PARAM_STR);
+			$stmt->bindParam(':month', $date[1], PDO::PARAM_STR);
+			$stmt->execute();
+			$results = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $results;
+			$stmt->closeCursor();
+		}
+		catch(Exception $e)
+		{
+			die($e->getMessage());
+		}
+
+	}
+
 	// Load the data from the database
 	private function _loadData()
 	{
