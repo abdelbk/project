@@ -9,6 +9,7 @@ session_start();
 // Include necessary files
 include_once '/../config/class.db_connect.php';
 include_once '/../config/db-cred.php';
+include_once '/../password/password.php';
 include_once 'class.admin.php';
 
 // Define the configuration constants

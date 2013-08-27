@@ -4,28 +4,15 @@
 */
 
 class Admin extends DB_Connect {
-/**
- * Determines the length of salt to use in hashed passwords
- *
- * @var int, the length of the password salt
-*/
-private $_saltlength = 7;
 
 /**
  * Stores or creates a database object and sets the salt length
  *
  * @param object $db, a database object
- * @param int $saltlength, the length of the password hash
 */
-public function __construct($db = NULL, $saltlength = NULL)
+public function __construct($db = NULL)
 {
 	parent::__construct($db); 
-
-	// if an int was passed, set the length of the salt
-	if(is_int($saltlength))
-	{
-		$this->_saltlength = $saltlength;
-	}
 }
 
 /**
@@ -73,11 +60,8 @@ public function processLoginForm()
 		header("Location: /../app/login.php?Error=" . $error);
 	}
 
-	// Get the hash of the supplied password
-	$hash = $this->_getSaltedHash($password, $user['user_pass']);
-
 	// Check if the hashed password matches the stored hash
-	if($user['user_pass'] == $hash)
+	if( password_verify($password, $user['user_pass']) )
 	{			
 		$_SESSION['user_email'] = $user['user_email'];
 		return TRUE;
@@ -112,23 +96,6 @@ public function processLoginForm()
     session_regenerate_id(true);
     $_SESSION['user_email'] = NULL;
  	return TRUE;
- }
-
- private function _getSaltedHash($string, $salt = NULL)
- {
- 	// Generate a salt if no salt is passed
- 	if($salt == NULL)
- 	{
- 		$salt = substr(md5(time()), 0, $this->_saltlength);
- 	}
- 	// Extract the salt from the string if one is passed
- 	else
- 	{
- 		$salt = substr($salt, 0, $this->_saltlength);
- 	}
-
- 	// Add the salt to the hash and return it
- 	return $salt . sha1($salt . $string);
  }
 
 }
