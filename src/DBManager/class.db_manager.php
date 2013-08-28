@@ -64,7 +64,7 @@ Class DB_Manager extends DB_Connect {
 				
 				// Insert data in the users table
 				$sql = "INSERT INTO users(year, month, nb_trial_user, nb_paid_user)
-						VALUES($date[0], $date[1], $fields[0], $fields[1])";
+					VALUES($date[0], $date[1], $fields[0], $fields[1])";
 
 				try
 				{
@@ -88,7 +88,7 @@ Class DB_Manager extends DB_Connect {
 				
 				// Insert data in the business table
 				$sql = "INSERT INTO business(year, month, nb_prospected_users, nb_new_users, nb_total_users, nb_jobcategories)
-						VALUES($date[0], $date[1], $fields[0], $fields[1], $fields[2], $fields[3])";
+					VALUES($date[0], $date[1], $fields[0], $fields[1], $fields[2], $fields[3])";
 
 				try
 				{
@@ -110,7 +110,7 @@ Class DB_Manager extends DB_Connect {
 
 				// Insert data in the sites table
 				$sql = "INSERT INTO sites(year, month, nb_pages, nb_visitors)
-						VALUES($date[0], $date[1], $fields[0], $fields[1])";
+					VALUES($date[0], $date[1], $fields[0], $fields[1])";
 
 				try
 				{
@@ -312,18 +312,18 @@ Class DB_Manager extends DB_Connect {
 	*/
 	private function urlExists($url) 
 	{
-    	$ch = @curl_init($url);
-    	@curl_setopt($ch, CURLOPT_HEADER, TRUE);
-    	@curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-    	@curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
-    	@curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    	$status = array();
-    	preg_match('/HTTP\/.* ([0-9]+) .*/', @curl_exec($ch) , $status);
-    	if($status[1] == '200')
-    	{
-    		return true;
-    	}
-    	return false;
+    		$ch = @curl_init($url);
+    		@curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    		@curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+    		@curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+    		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    		$status = array();
+    		preg_match('/HTTP\/.* ([0-9]+) .*/', @curl_exec($ch) , $status);
+    		if($status[1] == '200')
+    		{
+    			return true;
+    		}
+    		return false;
 	}
 
 	/**
@@ -335,13 +335,13 @@ Class DB_Manager extends DB_Connect {
 	private function writeContent($url, $file)
 	{
 		$ch = @curl_init($url);
-    	$fp = fopen($this->_folder . $file, "w");
-    	@curl_setopt ($ch, CURLOPT_URL, $url);
-    	@curl_setopt($ch, CURLOPT_FILE, $fp);
-    	@curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);
-    	$content = @curl_exec($ch);
-    	fwrite($fp, $content);
-    	@curl_close($ch);
+    		$fp = fopen($this->_folder . $file, "w");
+    		@curl_setopt ($ch, CURLOPT_URL, $url);
+    		@curl_setopt($ch, CURLOPT_FILE, $fp);
+    		@curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);
+    		$content = @curl_exec($ch);
+    		fwrite($fp, $content);
+    		@curl_close($ch);
 		fclose($fp);
 	}
 
