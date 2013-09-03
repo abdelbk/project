@@ -5,8 +5,8 @@
 // This function uses the Highcharts library to display a chart 
 // depending on the arguments passed to it.
 // cls : represents the class that will be passed to the ajax call.
-// Data will be fetched according to the class passed as arguement
-// title : reprents to title of the chart
+// Data will be fetched according to the class passed as argument
+// title : reprents the title of the chart
 // container : represents the div that will hold the chart
 // series_names : represents the names of each series
 function createChart(cls, title, container, series_names) {
