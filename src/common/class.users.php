@@ -13,7 +13,7 @@ Class Users extends DB_Connect {
 	// Display the data in a table
 	public function createTable()
 	{
-		$data = $this->_loadData();
+		$data = $this->loadData();
 ?>
 			<table>
 				<thead>
@@ -29,10 +29,10 @@ Class Users extends DB_Connect {
 		foreach($data as $users)
 		{	
 			echo "<tr>";
-			echo "<td>" . $users['year'] . "</td>";
-			echo "<td>" . $users['month'] . "</td>";
-			echo "<td>" . $users['nb_trial_user'] . "</td>";
-			echo "<td>" . $users['nb_paid_user'] . "</td>";
+			for($i=0; $i < sizeof($users); $i++)
+			{
+				echo "<td>" . $users[$i] . "</td>";
+			}
 			echo "</tr>";
 
 		}
@@ -69,18 +69,18 @@ Class Users extends DB_Connect {
 
 	}
 
-	// Load the data from the database
-	private function _loadData()
+	// Load data
+	public function loadData()
 	{
-		$sql = "SELECT * FROM users";
+		$sql = "SELECT year, month, nb_trial_user, nb_paid_user FROM users";
 
 		try
 		{
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute();
-			$results = $stmt->fetchAll();
-			$stmt->closeCursor();
+			$results = $stmt->fetchAll(PDO::FETCH_NUM);
 			return $results;
+			$stmt->closeCursor();
 		}
 		catch(Exception $e)
 		{

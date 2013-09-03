@@ -13,7 +13,7 @@ Class Business extends DB_Connect {
 	// Display the data in a table
 	public function createTable()
 	{
-		$data = $this->_loadData();
+		$data = $this->loadData();
 ?>
 			<table>
 				<thead>
@@ -30,13 +30,11 @@ Class Business extends DB_Connect {
 <?php					
 		foreach($data as $business)
 		{	
-			echo "<tr>";
-			echo "<td>" . $business['year'] . "</td>";
-			echo "<td>" . $business['month'] . "</td>";
-			echo "<td>" . $business['nb_prospected_users'] . "</td>";
-			echo "<td>" . $business['nb_new_users'] . "</td>";
-			echo "<td>" . $business['nb_total_users'] . "</td>";
-			echo "<td>" . $business['nb_jobcategories'] . "</td>";
+		echo "<tr>";
+			for($i=0; $i < sizeof($business); $i++)
+			{
+				echo "<td>" . $business[$i] . "</td>";
+			}
 			echo "</tr>";
 
 		}
@@ -73,18 +71,18 @@ Class Business extends DB_Connect {
 
 	}
 
-	// Load the data from the database
-	private function _loadData()
+	// Load data
+	public function loadData()
 	{
-		$sql = "SELECT * FROM business";
+		$sql = "SELECT year, month, nb_prospected_users, nb_new_users, nb_total_users, nb_jobcategories FROM business";
 
 		try
 		{
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute();
-			$results = $stmt->fetchAll();
-			$stmt->closeCursor();
+			$results = $stmt->fetchAll(PDO::FETCH_NUM);
 			return $results;
+			$stmt->closeCursor();
 		}
 		catch(Exception $e)
 		{

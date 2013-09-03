@@ -64,11 +64,15 @@ Class DB_Manager extends DB_Connect {
 				
 				// Insert data in the users table
 				$sql = "INSERT INTO users(year, month, nb_trial_user, nb_paid_user)
-					VALUES($date[0], $date[1], $fields[0], $fields[1])";
+					VALUES(:date_0, :date_1, :field_0, :field_1)";
 
 				try
 				{
 					$stmt = $this->db->prepare($sql);
+					$stmt->bindParam(':date_0', $date[0], PDO::PARAM_STR);
+					$stmt->bindParam(':date_1', $date[1], PDO::PARAM_STR);
+					$stmt->bindParam(':field_0', $fields[0], PDO::PARAM_STR);
+					$stmt->bindParam(':field_1', $fields[1], PDO::PARAM_STR);
 					$stmt->execute();
 					$stmt->closeCursor();
 				}
@@ -88,11 +92,17 @@ Class DB_Manager extends DB_Connect {
 				
 				// Insert data in the business table
 				$sql = "INSERT INTO business(year, month, nb_prospected_users, nb_new_users, nb_total_users, nb_jobcategories)
-					VALUES($date[0], $date[1], $fields[0], $fields[1], $fields[2], $fields[3])";
+					VALUES(:date_0, :date_1, :field_0, :field_1, :field_2, :field_3)";
 
 				try
 				{
 					$stmt = $this->db->prepare($sql);
+					$stmt->bindParam(':date_0', $date[0], PDO::PARAM_STR);
+					$stmt->bindParam(':date_1', $date[1], PDO::PARAM_STR);
+					$stmt->bindParam(':field_0', $fields[0], PDO::PARAM_STR);
+					$stmt->bindParam(':field_1', $fields[1], PDO::PARAM_STR);
+					$stmt->bindParam(':field_2', $fields[2], PDO::PARAM_STR);
+					$stmt->bindParam(':field_3', $fields[3], PDO::PARAM_STR);
 					$stmt->execute();
 					$stmt->closeCursor();
 				}
@@ -110,11 +120,15 @@ Class DB_Manager extends DB_Connect {
 
 				// Insert data in the sites table
 				$sql = "INSERT INTO sites(year, month, nb_pages, nb_visitors)
-					VALUES($date[0], $date[1], $fields[0], $fields[1])";
+					VALUES(:date_0, :date_1, :field_0, :field_1)";
 
 				try
 				{
 					$stmt = $this->db->prepare($sql);
+					$stmt->bindParam(':date_0', $date[0], PDO::PARAM_STR);
+					$stmt->bindParam(':date_1', $date[1], PDO::PARAM_STR);
+					$stmt->bindParam(':field_0', $fields[0], PDO::PARAM_STR);
+					$stmt->bindParam(':field_1', $fields[1], PDO::PARAM_STR);
 					$stmt->execute();
 					$stmt->closeCursor();
 				}
@@ -155,15 +169,16 @@ Class DB_Manager extends DB_Connect {
 				{
 					$file = $y.$m.'.json';
 					$this->writeContent($url, $file);
-					if(filesize($file) > 0)
-					{
-						$this->_messages[] = $file . " has been created<br />";
-					}
 				}
 				else
 				{
 					break 2;
 				}
+				
+				if(filesize($this->_folder . $file) > 0)
+				{
+					$this->_messages[] = $file . " has been created<br />";
+				}	
 
 				if($m == 12)
 				{
@@ -173,6 +188,13 @@ Class DB_Manager extends DB_Connect {
 		}
 	}
 
+	// Get all the messages to be displayed 
+	public function getMessages()
+	{
+		return $this->_messages;
+	}
+
+
 	/**
 	 * Check for updates for a given table
 	 *
@@ -181,7 +203,6 @@ Class DB_Manager extends DB_Connect {
 	 * @param array $content, the content of the file with which we want to compare the old data to
 	 * @param array $date, the date of the file  
 	 */
-
 	private function checkForUpdates($table, $obj, $content, $date)
 	{
 		$new_data = array();
@@ -191,12 +212,15 @@ Class DB_Manager extends DB_Connect {
 		$updates = array_diff_assoc($new_data, $old_data);
 		if(!empty($updates))
 		{
-			foreach($updates as $key => $value)
+			foreach($updates as $column => $value)
 			{
-				$sql = "UPDATE $table SET $key = '$value' WHERE year = $date[0] AND month = $date[1]";
+				$sql = "UPDATE $table SET $column = :value WHERE year = :date_0 AND month = :date_1";
 				try
 				{
 					$stmt = $this->db->prepare($sql);
+					$stmt->bindValue(':value', $value, PDO::PARAM_INT);
+					$stmt->bindParam(':date_0', $date[0], PDO::PARAM_STR);
+					$stmt->bindParam(':date_1', $date[1], PDO::PARAM_STR);
 					$stmt->execute();
 					$stmt->closeCursor();
 				}
@@ -338,7 +362,7 @@ Class DB_Manager extends DB_Connect {
     		$fp = fopen($this->_folder . $file, "w");
     		@curl_setopt ($ch, CURLOPT_URL, $url);
     		@curl_setopt($ch, CURLOPT_FILE, $fp);
-    		@curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);
+    		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     		$content = @curl_exec($ch);
     		fwrite($fp, $content);
     		@curl_close($ch);

@@ -13,7 +13,7 @@ Class Sites extends DB_Connect {
 	// Display the data in a table
 	public function createTable()
 	{
-		$data = $this->_loadData();
+		$data = $this->loadData();
 ?>
 			<table>
 				<thead>
@@ -29,10 +29,10 @@ Class Sites extends DB_Connect {
 		foreach($data as $sites)
 		{	
 			echo "<tr>";
-			echo "<td>" . $sites['year'] . "</td>";
-			echo "<td>" . $sites['month'] . "</td>";
-			echo "<td>" . $sites['nb_pages'] . "</td>";
-			echo "<td>" . $sites['nb_visitors'] . "</td>";
+			for($i=0; $i < sizeof($sites); $i++)
+			{
+				echo "<td>" . $sites[$i] . "</td>";
+			}
 			echo "</tr>";
 
 		}
@@ -69,18 +69,18 @@ Class Sites extends DB_Connect {
 
 	}
 
-	// Load the data from the database
-	private function _loadData()
+	// Load dada
+	public function loadData()
 	{
-		$sql = "SELECT * FROM sites";
+		$sql = "SELECT year, month, nb_pages, nb_visitors FROM sites";
 
 		try
 		{
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute();
-			$results = $stmt->fetchAll();
-			$stmt->closeCursor();
+			$results = $stmt->fetchAll(PDO::FETCH_NUM);
 			return $results;
+			$stmt->closeCursor();
 		}
 		catch(Exception $e)
 		{
