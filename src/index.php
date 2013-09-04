@@ -9,7 +9,7 @@ include_once 'config/init.php';
 
 if($_SESSION['user_email'] == NULL)
 {
-	header("Location: /../app/login.php");
+	header("Location: ../login.php");
 }
 
 ?>

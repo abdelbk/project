@@ -10,7 +10,7 @@ include_once 'config/init.php';
 // Redirect to the application page if the session is started
 if(isset($_SESSION['user_email']))
 {
-	header("Location: /../app/index.php");
+	header("Location: ../index.php");
 }
 
 // Make sure that the passed variable to url is an actual error message

@@ -16,7 +16,7 @@ function createChart(cls, title, container, series_names) {
                   "Septembre", "Octobre", "Novembre", "Décembre"];
     
     $(document).ready(function() {
-        $.getJSON("/app/common/ajax.php?class="+ cls, function(data) {
+        $.getJSON("~/../ajax.php?class="+ cls, function(data) {
 
             // Load all the existent series
             function loadSeries()

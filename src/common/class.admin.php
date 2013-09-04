@@ -57,7 +57,7 @@ public function processLoginForm()
 	// Fails if the email doesn't match a database entry
 	if(!isset($user))
 	{
-		header("Location: /../app/login.php?Error=" . $error);
+		header("Location: ../login.php?Error=" . $error);
 	}
 
 	// Check if the hashed password matches the stored hash
@@ -69,7 +69,7 @@ public function processLoginForm()
 	// Fail if the password doesn't match
 	else
 	{
-		header("Location: /../app/login.php?Error=" . $error);
+		header("Location: ../login.php?Error=" . $error);
 	}
 
  }

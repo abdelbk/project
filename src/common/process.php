@@ -27,12 +27,12 @@ $actions = array(
 		'user_login' => array(
 			'object' => 'Admin',
 			'method' => 'processLoginForm',
-			'header' => 'Location: /../app/index.php'
+			'header' => 'Location: ../index.php'
 		),
 		'user_logout' => array(
 			'object' => 'Admin',
 			'method' => 'processLogout',
-			'header' => 'Location: /../app/login.php'
+			'header' => 'Location: ../login.php'
 		)
 	);
 	
@@ -58,7 +58,7 @@ if ($_POST['token'] == $_SESSION['token']
 // Redirect to the login form if token/action is invalid
 else
 {
-	header("Location: /../app/login.php");
+	header("Location: ../login.php");
 }
 
 ?> 

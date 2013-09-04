@@ -19,6 +19,6 @@ for($i = 0; $i < sizeof($results[0]); $i++)
 	}
 }
 
-echo json_encode(array_chunk($json, 5));
+echo json_encode(array_chunk($json, sizeof($results)));
 
 ?>
