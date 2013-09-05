@@ -10,6 +10,7 @@ include_once 'config/init.php';
 if($_SESSION['user_email'] == NULL)
 {
 	header("Location: ../login.php");
+	exit();
 }
 
 ?>

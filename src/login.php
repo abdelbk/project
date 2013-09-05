@@ -11,6 +11,7 @@ include_once 'config/init.php';
 if(isset($_SESSION['user_email']))
 {
 	header("Location: ../index.php");
+	exit();
 }
 
 // Make sure that the passed variable to url is an actual error message
