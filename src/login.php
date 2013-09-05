@@ -35,10 +35,10 @@ $error = 'Votre combinaison email/mot de passe est invalide'
 					<form action="common/process.php" method="post">
 					<fieldset>
      					<dl>
-                        	<input type="text" name="email" id="email" size="25" value="xyz@example.com"/>
+                        	<input type="text" name="email" id="email" size="25" placeholder="xyz@example.com"/>
                     	</dl>
                     	<dl>
-                        	<input type="text" name="password" id="password" size="25" value="Votre mot de passe"/>
+                        	<input type="text" name="password" id="password" size="25" placeholder="Votre mot de passe"/>
                     	</dl>
                     		<input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>"/>
                     		<input type="hidden" name="action" value="user_login"/>
